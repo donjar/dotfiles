@@ -1,7 +1,7 @@
 "" GENERAL
 " Use 2 spaces and some magic
 set tabstop=2
-set softtabstop=0
+set softtabstop=2
 set shiftwidth=2
 " Add line marker at 81th character
 set cc=81
@@ -98,9 +98,11 @@ autocmd VimEnter * :NERDTree
 let NERDTreeIgnore = ['\.pyc$']
 
 "" BASE16 - vim/terminal color scheme
-let base16colorspace=256
+let base16colorspace = 256
 colorscheme base16-dracula
 
 "" LANGUAGE-SPECIFIC
 " Vim-TeX
 let g:vimtex_latexmk_options = '-pdf -shell-escape -verbose -file-line-error -synctex=1 -interaction=nonstopmode'
+
+let g:python_recommended_style = 0
