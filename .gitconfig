@@ -1,0 +1,9 @@
+[user]
+	name = Herbert Ilhan Tanujaya
+	email = mail@herbert.id
+[diff]
+	renames = true
+[color]
+	ui = true
+[push]
+	default = simple
