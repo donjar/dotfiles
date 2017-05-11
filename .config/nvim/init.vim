@@ -1,37 +1,37 @@
-set tabstop=4 softtabstop=0 noexpandtab shiftwidth=4 cc=81 number showcmd
+"" GENERAL
+" Use 2 spaces and some magic
+set tabstop=2
+set softtabstop=0
+set shiftwidth=2
+" Add line marker at 81th character
+set cc=81
+" Show line numbers
+set number
+" Show partial commands at bottom right
+set showcmd
+
+" Set undo files and backup files in ~/.vimtmp
 set undofile backup
 set backupdir=~/.vimtmp,.
 set directory=~/.vimtmp,.
 set undodir=~/.vimtmp,.
 
-" Escape terminal
-tnoremap <esc> <C-\><C-n>
-
 " Disable mouse
 set mouse=h
 
-" Tab settings
-autocmd FileType eruby setlocal shiftwidth=2 tabstop=2 expandtab
-"autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 expandtab
-autocmd FileType html setlocal shiftwidth=2 tabstop=2 expandtab
-autocmd FileType scss setlocal shiftwidth=2 tabstop=2 expandtab
-autocmd FileType yaml setlocal shiftwidth=2 tabstop=2 expandtab
-autocmd FileType ruby setlocal shiftwidth=2 tabstop=2 expandtab
-
-" Add listchars
+" On `:set list` show space with ␣ and tab with >·
 set listchars=tab:>·,space:␣
 
+" Use \ as local leader, for LaTeX etc.
 let maplocalleader='\'
 
+" Map Ctrl+N to :noh
+nnoremap <C-n> :noh<CR>
+
+"" GENERAL PLUGINS
 call plug#begin()
-" Sensible defaults
+" Use sensible defaults
 Plug 'tpope/vim-sensible'
-" Nerdtree - file browser in sidebar.
-Plug 'scrooloose/nerdtree'
-" Syntastic - syntax checker.
-Plug 'scrooloose/syntastic'
-" YouCompleteMe - autocomplete.
-"Plug 'Valloric/YouCompleteMe'
 " Pretty status line
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -43,22 +43,18 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 " Auto close parantheses
 Plug 'jiangmiao/auto-pairs'
-
-" LaTeX
-Plug 'lervag/vimtex'
-" Scala
-Plug 'derekwyatt/vim-scala'
-" Rails stuff
-Plug 'tpope/vim-rails'
-Plug 'tpope/vim-bundler'
 call plug#end()
 
-" Enter NERDTree on start
-autocmd VimEnter * :NERDTree
-" Ignore pyc files
-let NERDTreeIgnore = ['\.pyc$']
+"" NEOVIM
+" Escape terminal
+tnoremap <esc> <C-\><C-n>
 
-" Syntastic
+"" SYNTASTIC - Syntax Checker
+call plug#begin()
+Plug 'scrooloose/syntastic'
+call plug#end()
+
+" These defaults are from Syntastic
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -73,16 +69,49 @@ let g:syntastic_mode_map = {
 
 nnoremap <C-c> :SyntasticCheck<CR>
 nnoremap <C-A-c> :SyntasticReset<CR>
-nnoremap <C-n> :noh<CR>
 
-" Base16 color scheme
-let base16colorspace=256
-colorscheme base16-dracula
-
+" Syntastic Checkers
 let g:syntastic_python_checkers = ['flake8']
 let g:syntastic_ruby_checkers = ['rubocop']
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_haml_checkers = ['haml_lint']
 let g:syntastic_scss_checkers = ['scss_lint']
+
+"" NERDTREE - file browser in sidebar
+call plug#begin()
+Plug 'scrooloose/nerdtree'
+call plug#end()
+
+" Enter NERDTree on start
+autocmd VimEnter * :NERDTree
+" Ignore pyc files
+let NERDTreeIgnore = ['\.pyc$']
+
+"" BASE16 - vim/terminal color scheme
+call plug#begin()
+Plug 'chriskempson/base16-vim'
+call plug#end()
+
+let base16colorspace=256
+colorscheme base16-dracula
+
+"" YOUCOMPLETEME - Autocompletion as you type
+call plug#begin()
+"Plug 'Valloric/YouCompleteMe'
+call plug#end()
+
+"" LANGUAGE-SPECIFIC PLUGINS
+call plug#begin()
+" LaTeX
+Plug 'lervag/vimtex'
+" Scala
+Plug 'derekwyatt/vim-scala'
+" Rails stuff
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-bundler'
+" Javascript stuff
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+call plug#end()
 
 let g:vimtex_latexmk_options = '-pdf -shell-escape -verbose -file-line-error -synctex=1 -interaction=nonstopmode'
