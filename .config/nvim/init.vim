@@ -28,7 +28,7 @@ let maplocalleader='\'
 " Map Ctrl+N to :noh
 nnoremap <C-n> :noh<CR>
 
-"" GENERAL PLUGINS
+"" PLUGINS
 call plug#begin()
 " Use sensible defaults
 Plug 'tpope/vim-sensible'
@@ -43,6 +43,23 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 " Auto close parantheses
 Plug 'jiangmiao/auto-pairs'
+" Syntax checkers
+Plug 'scrooloose/syntastic'
+" File browser in sidebar
+Plug 'scrooloose/nerdtree'
+" Autocomplete as you type
+"Plug 'Valloric/YouCompleteMe'
+
+" LaTeX
+Plug 'lervag/vimtex'
+" Scala
+Plug 'derekwyatt/vim-scala'
+" Rails stuff
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-bundler'
+" Javascript stuff
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
 call plug#end()
 
 "" NEOVIM
@@ -50,10 +67,6 @@ call plug#end()
 tnoremap <esc> <C-\><C-n>
 
 "" SYNTASTIC - Syntax Checker
-call plug#begin()
-Plug 'scrooloose/syntastic'
-call plug#end()
-
 " These defaults are from Syntastic
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
@@ -67,6 +80,7 @@ let g:syntastic_mode_map = {
 	\ "active_filetypes": [],
 	\ "passive_filetypes": [] }
 
+" Map Ctrl+C to check syntax and Ctrl+Alt+C to remove syntax checker
 nnoremap <C-c> :SyntasticCheck<CR>
 nnoremap <C-A-c> :SyntasticReset<CR>
 
@@ -78,40 +92,15 @@ let g:syntastic_haml_checkers = ['haml_lint']
 let g:syntastic_scss_checkers = ['scss_lint']
 
 "" NERDTREE - file browser in sidebar
-call plug#begin()
-Plug 'scrooloose/nerdtree'
-call plug#end()
-
 " Enter NERDTree on start
 autocmd VimEnter * :NERDTree
 " Ignore pyc files
 let NERDTreeIgnore = ['\.pyc$']
 
 "" BASE16 - vim/terminal color scheme
-call plug#begin()
-Plug 'chriskempson/base16-vim'
-call plug#end()
-
 let base16colorspace=256
 colorscheme base16-dracula
 
-"" YOUCOMPLETEME - Autocompletion as you type
-call plug#begin()
-"Plug 'Valloric/YouCompleteMe'
-call plug#end()
-
-"" LANGUAGE-SPECIFIC PLUGINS
-call plug#begin()
-" LaTeX
-Plug 'lervag/vimtex'
-" Scala
-Plug 'derekwyatt/vim-scala'
-" Rails stuff
-Plug 'tpope/vim-rails'
-Plug 'tpope/vim-bundler'
-" Javascript stuff
-Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
-call plug#end()
-
+"" LANGUAGE-SPECIFIC
+" Vim-TeX
 let g:vimtex_latexmk_options = '-pdf -shell-escape -verbose -file-line-error -synctex=1 -interaction=nonstopmode'
