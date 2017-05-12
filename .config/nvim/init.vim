@@ -1,8 +1,10 @@
 "" GENERAL
 " Use 2 spaces and some magic
 set tabstop=2
-set softtabstop=2
+set softtabstop=0
 set shiftwidth=2
+" Highlight searches
+set hlsearch
 " Add line marker at 81th character
 set cc=81
 " Show line numbers
@@ -90,6 +92,7 @@ let g:syntastic_ruby_checkers = ['rubocop']
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_haml_checkers = ['haml_lint']
 let g:syntastic_scss_checkers = ['scss_lint']
+let g:syntastic_swift_checkers = ['swiftpm', 'swiftlint']
 
 "" NERDTREE - file browser in sidebar
 " Enter NERDTree on start
@@ -102,7 +105,15 @@ let base16colorspace = 256
 colorscheme base16-dracula
 
 "" LANGUAGE-SPECIFIC
-" Vim-TeX
+
+" Javascript: Allow JSX in normal JS files
+let g:syntastic_swift_checkers = ['swiftpm', 'swiftlint']
+
+" LaTeX: default latexmk options for vimtex
 let g:vimtex_latexmk_options = '-pdf -shell-escape -verbose -file-line-error -synctex=1 -interaction=nonstopmode'
 
+" Python: don't use PEP8 recommendation of 4 spaces
 let g:python_recommended_style = 0
+
+" Swift: use 4 spaces
+autocmd FileType swift setlocal shiftwidth=4 tabstop=4
