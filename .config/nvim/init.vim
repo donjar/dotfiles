@@ -3,6 +3,8 @@
 set tabstop=2
 set softtabstop=0
 set shiftwidth=2
+" Expand tabs into spaces
+set expandtab
 " Highlight searches
 set hlsearch
 " Add line marker at 81th character
