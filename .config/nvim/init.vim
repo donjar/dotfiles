@@ -51,8 +51,6 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'scrooloose/syntastic'
 " File browser in sidebar
 Plug 'scrooloose/nerdtree'
-" Autocomplete as you type
-"Plug 'Valloric/YouCompleteMe'
 
 " LaTeX
 Plug 'lervag/vimtex'
@@ -64,6 +62,8 @@ Plug 'tpope/vim-bundler'
 " Javascript stuff
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
+" Typescript
+Plug 'leafgarland/typescript-vim'
 call plug#end()
 
 "" NEOVIM
@@ -119,3 +119,11 @@ let g:python_recommended_style = 0
 
 " Swift: use 4 spaces
 autocmd FileType swift setlocal shiftwidth=4 tabstop=4
+
+" Typescript: linebreak at 100 chars and use ES2015
+autocmd FileType typescript setlocal cc=101
+let g:typescript_compiler_options = '--target ES6'
+
+" Java: got this from StackOverflow, set make to javac
+autocmd Filetype java set makeprg=javac\ %:S
+set errorformat=%A%f:%l:\ %m,%-Z%p^,%-C%.%#
