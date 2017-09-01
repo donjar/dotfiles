@@ -1,10 +1,8 @@
 alias l="ls -hFC"
 alias ll="ls -hlaF"
+alias lc='ls -halF --color=none'
 alias v="nvim"
-
-export LC_CTYPE=en_US.UTF-8
-export CLICOLOR=1
-export LSCOLORS=gxGxFxdxbxDxDxBxBxExEx
+alias wifi="sudo killall create_ap; sudo create_ap wlp3s0 enp4s0 perditus paradisus"
 
 export VISUAL=nvim
 export EDITOR="$VISUAL"
