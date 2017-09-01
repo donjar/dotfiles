@@ -1,9 +1,11 @@
 [user]
-	name = Herbert Ilhan Tanujaya
-	email = mail@herbert.id
+  name = Herbert Ilhan Tanujaya
+  email = mail@herbert.id
 [diff]
-	renames = true
+  renames = true
 [color]
-	ui = true
+  ui = true
 [push]
-	default = simple
+  default = simple
+[core]
+  excludesfile = /home/donjar/.gitignore_global
