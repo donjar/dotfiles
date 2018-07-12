@@ -48,9 +48,21 @@ Plug 'airblade/vim-gitgutter'
 " Auto close parantheses
 Plug 'jiangmiao/auto-pairs'
 " Syntax checkers
-Plug 'scrooloose/syntastic'
+Plug 'w0rp/ale'
 " File browser in sidebar
 Plug 'scrooloose/nerdtree'
+" Quoting/parenthesizing made simple
+Plug 'tpope/vim-surround'
+" Dark powered asynchronous completion framework (?)
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+" Auto add `end` on Ruby etc.
+Plug 'tpope/vim-endwise'
 
 " LaTeX
 Plug 'lervag/vimtex'
@@ -64,37 +76,25 @@ Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 " Typescript
 Plug 'leafgarland/typescript-vim'
+" Java
+Plug 'artur-shaik/vim-javacomplete2'
+" Rust
+Plug 'rust-lang/rust.vim'
+" Swift
+Plug 'keith/swift.vim'
+" Fish
+Plug 'dag/vim-fish'
 call plug#end()
+
+"" ALE
+" Integrate with Airline
+let g:airline#extensions#ale#enabled = 1
+" Set 1000 ms delay before checking
+let g:ale_completion_delay = 1000
 
 "" NEOVIM
 " Escape terminal
 tnoremap <esc> <C-\><C-n>
-
-"" SYNTASTIC - Syntax Checker
-" These defaults are from Syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_loc_list_height = 3
-let g:syntastic_mode_map = {
-	\ "mode": "passive",
-	\ "active_filetypes": [],
-	\ "passive_filetypes": [] }
-
-" Map Ctrl+C to check syntax and Ctrl+Alt+C to remove syntax checker
-nnoremap <C-c> :SyntasticCheck<CR>
-nnoremap <C-A-c> :SyntasticReset<CR>
-
-" Syntastic Checkers
-let g:syntastic_python_checkers = ['flake8']
-let g:syntastic_ruby_checkers = ['rubocop']
-let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_haml_checkers = ['haml_lint']
-let g:syntastic_scss_checkers = ['scss_lint']
-let g:syntastic_swift_checkers = ['swiftpm', 'swiftlint']
 
 "" NERDTREE - file browser in sidebar
 " Enter NERDTree on start
@@ -106,16 +106,40 @@ let NERDTreeIgnore = ['\.pyc$']
 let base16colorspace = 256
 colorscheme base16-dracula
 
-"" LANGUAGE-SPECIFIC
+"" DEOPLETE
+" Enable it
+let g:deoplete#enable_at_startup = 1
+" Let <Tab> also do completion
+inoremap <expr><Tab>  pumvisible() ? "\<C-n>" : "<Tab>"
+" Map Shift + Tab to prev
+inoremap <S-Tab> <C-p>
+" Auto close after enter
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function() abort
+ return deoplete#close_popup() . "\<CR>"
+endfunction
 
-" Javascript: Allow JSX in normal JS files
-let g:syntastic_swift_checkers = ['swiftpm', 'swiftlint']
+"" ALE
+" Do not lint on text change
+let g:ale_lint_on_text_changed = 'never'
+" Only those linters that I want
+let g:ale_linters_explicit = 1
+let g:ale_linters = {'ruby': ['rubocop']}
+
+"" LANGUAGE-SPECIFIC
 
 " LaTeX: default latexmk options for vimtex
 let g:vimtex_latexmk_options = '-pdf -shell-escape -verbose -file-line-error -synctex=1 -interaction=nonstopmode'
+" Deoplete for LaTeX
+if !exists('g:deoplete#omni#input_patterns')
+    let g:deoplete#omni#input_patterns = {}
+endif
+let g:deoplete#omni#input_patterns.tex = g:vimtex#re#deoplete
 
 " Python: don't use PEP8 recommendation of 4 spaces
 let g:python_recommended_style = 0
+
+let g:ale_linters = {'python': []}
 
 " Swift: use 4 spaces
 autocmd FileType swift setlocal shiftwidth=4 tabstop=4
@@ -124,6 +148,12 @@ autocmd FileType swift setlocal shiftwidth=4 tabstop=4
 autocmd FileType typescript setlocal cc=101
 let g:typescript_compiler_options = '--target ES6'
 
-" Java: got this from StackOverflow, set make to javac
-autocmd Filetype java set makeprg=javac\ %:S
+" Java: got this from StackOverflow, set make to javac. Also use 4 spaces
+autocmd Filetype java set makeprg=javac\ %:S shiftwidth=4 tabstop=4
 set errorformat=%A%f:%l:\ %m,%-Z%p^,%-C%.%#
+
+" C: use 4 spaces
+autocmd FileType c setlocal shiftwidth=4 tabstop=4
+
+" Rust: don't use recommendation of 4 spcaes
+let g:rust_recommended_style = 0
