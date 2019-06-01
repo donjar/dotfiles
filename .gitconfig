@@ -1,13 +1,39 @@
+# vim: set noexpandtab:
 [user]
-  name = Herbert Ilhan Tanujaya
-  email = mail@herbert.id
+	name = Herbert Ilhan Tanujaya
+	email = mail@herbert.id
 [diff]
-  renames = true
+	renames = true
 [color]
-  ui = true
+	ui = true
 [push]
-  default = simple
+	default = simple
 [core]
-  excludesfile = /home/donjar/.gitignore
+	excludesfile = /home/donjar/.global_gitignore
 [help]
-  autocorrect = 1
+	autocorrect = 1
+[alias]
+	aa = add -A
+	ap = add -p
+	bd = branch -D
+	ca = commit --amend
+	cb = checkout -b
+	cg = clone git@github.com:
+	cl = clean -fdxi
+	cm = commit -m
+	co = checkout
+	cp = checkout -p --
+	dc = diff --cached
+	d = diff
+	dh = diff HEAD^
+	dno = diff --name-only
+	dw = diff --word-diff
+	lg = log --one-line --graph
+	puo = push -u origin
+	rh = reset HEAD .
+	rm = rebase master
+	rpo = remote prune origin
+	s = status
+	stp = stash pop
+	sts = stash show
+	st = stash
