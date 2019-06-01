@@ -18,7 +18,6 @@
 	bd = branch -D
 	ca = commit --amend
 	cb = checkout -b
-	cg = clone git@github.com:
 	cl = clean -fdxi
 	cm = commit -m
 	co = checkout
