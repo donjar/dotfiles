@@ -21,7 +21,7 @@ set directory=~/.vimtmp,.
 set undodir=~/.vimtmp,.
 
 " Disable mouse
-set mouse=h
+" set mouse=h
 
 " On `:set list` show space with ␣ and tab with >·
 set listchars=tab:>·,space:␣
@@ -63,6 +63,8 @@ else
 endif
 " Auto add `end` on Ruby etc.
 Plug 'tpope/vim-endwise'
+" Colorful parans
+Plug 'kien/rainbow_parentheses.vim'
 
 " LaTeX
 Plug 'lervag/vimtex'
@@ -76,14 +78,15 @@ Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 " Typescript
 Plug 'leafgarland/typescript-vim'
-" Java
-Plug 'artur-shaik/vim-javacomplete2'
+Plug 'peitalin/vim-jsx-typescript'
 " Rust
 Plug 'rust-lang/rust.vim'
 " Swift
 Plug 'keith/swift.vim'
 " Fish
 Plug 'dag/vim-fish'
+" Golang
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 call plug#end()
 
 "" ALE
@@ -91,6 +94,11 @@ call plug#end()
 let g:airline#extensions#ale#enabled = 1
 " Set 1000 ms delay before checking
 let g:ale_completion_delay = 1000
+" Do not lint on text change
+let g:ale_lint_on_text_changed = 'never'
+" Only those linters that I want
+let g:ale_linters_explicit = 1
+let g:ale_linters = {'ruby': ['rubocop']}
 
 "" NEOVIM
 " Escape terminal
@@ -119,12 +127,28 @@ function! s:my_cr_function() abort
  return deoplete#close_popup() . "\<CR>"
 endfunction
 
-"" ALE
-" Do not lint on text change
-let g:ale_lint_on_text_changed = 'never'
-" Only those linters that I want
-let g:ale_linters_explicit = 1
-let g:ale_linters = {'ruby': ['rubocop']}
+"" RAINBOW PARANTHESES
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
+
+let g:rbpt_colorpairs = [
+    \ ['brown',       'RoyalBlue3'],
+    \ ['Darkblue',    'SeaGreen3'],
+    \ ['darkgray',    'DarkOrchid3'],
+    \ ['darkgreen',   'firebrick3'],
+    \ ['darkcyan',    'RoyalBlue3'],
+    \ ['darkred',     'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['brown',       'firebrick3'],
+    \ ['gray',        'RoyalBlue3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['Darkblue',    'firebrick3'],
+    \ ['darkgreen',   'RoyalBlue3'],
+    \ ['darkcyan',    'SeaGreen3'],
+    \ ['darkred',     'DarkOrchid3'],
+    \ ]
 
 "" LANGUAGE-SPECIFIC
 
@@ -135,9 +159,11 @@ if !exists('g:deoplete#omni#input_patterns')
     let g:deoplete#omni#input_patterns = {}
 endif
 let g:deoplete#omni#input_patterns.tex = g:vimtex#re#deoplete
+" Don't open quickfix
+let g:vimtex_quickfix_mode = 0
 
 " Python: don't use PEP8 recommendation of 4 spaces
-let g:python_recommended_style = 0
+" let g:python_recommended_style = 0
 
 let g:ale_linters = {'python': []}
 
@@ -148,12 +174,19 @@ autocmd FileType swift setlocal shiftwidth=4 tabstop=4
 autocmd FileType typescript setlocal cc=101
 let g:typescript_compiler_options = '--target ES6'
 
-" Java: got this from StackOverflow, set make to javac. Also use 4 spaces
-autocmd Filetype java set makeprg=javac\ %:S shiftwidth=4 tabstop=4
-set errorformat=%A%f:%l:\ %m,%-Z%p^,%-C%.%#
+" Set some colors for Typescript JSX
+hi tsxTagName ctermfg=DarkRed
+hi tsxCloseString ctermfg=Blue
+hi tsxCloseTag ctermfg=Blue
+hi tsxAttributeBraces ctermfg=Blue
+hi tsxEqual ctermfg=Blue
+hi tsxAttrib ctermfg=Yellow
 
 " C: use 4 spaces
 autocmd FileType c setlocal shiftwidth=4 tabstop=4
 
 " Rust: don't use recommendation of 4 spcaes
 let g:rust_recommended_style = 0
+
+" Golang: use tabs
+autocmd FileType go setlocal noexpandtab

@@ -8,4 +8,6 @@
 [push]
   default = simple
 [core]
-  excludesfile = /home/donjar/.gitignore_global
+  excludesfile = /home/donjar/.gitignore
+[help]
+  autocorrect = 1
