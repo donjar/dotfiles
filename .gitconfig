@@ -28,6 +28,7 @@
 	dno = diff --name-only
 	dw = diff --word-diff
 	lg = log --one-line --graph
+	pf = push --force-with-lease
 	puo = push -u origin
 	rh = reset HEAD .
 	rm = rebase master
