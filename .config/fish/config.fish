@@ -11,6 +11,8 @@ else if test $OS = "Darwin"
 end
 rvm default
 
+setxkbmap -option caps:escape
+
 function c
   g++ $argv ; and echo 's' ; and ./a.out
 end
