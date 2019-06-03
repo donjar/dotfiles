@@ -18,10 +18,16 @@ ln -s $PWD/.config/nvim/autoload/plug.vim ~/.config/nvim/autoload/plug.vim
 ln -s $PWD/.config/fish/config.fish ~/.config/fish/config.fish
 ln -s $PWD/.config/fish/fishfile ~/.config/fish/fishfile
 
+# pyenv
+curl https://pyenv.run | bash
+pyenv install 3.7.3
+pyenv global 3.7.3
+
 # neovim
 sudo add-apt-repository ppa:neovim-ppa/stable
 sudo apt update
 sudo apt install neovim -y
+pip install pynvim
 
 # fish
 sudo apt-add-repository ppa:fish-shell/release-3
@@ -31,3 +37,6 @@ sudo apt install fish -y
 # fisher
 curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fish
 fish -c "cat ~/.config/fish/fishfile | fisher add"
+
+# pyls
+pip install pyls

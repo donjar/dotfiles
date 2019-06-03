@@ -52,7 +52,7 @@ Plug 'jiangmiao/auto-pairs'
 " Language server
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
 " Fuzzy finder
-Plug 'junegunn/fzf'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 " File browser in sidebar
 Plug 'scrooloose/nerdtree'
 " Quoting/parenthesizing made simple
