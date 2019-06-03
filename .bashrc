@@ -178,3 +178,5 @@ source ~/.rvm/scripts/rvm
 export PATH="/home/donjar/.anaconda3/bin:$PATH"
 
 export PATH="/usr/local/lib/nodejs/node-v10.14-1/bin:$PATH"
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

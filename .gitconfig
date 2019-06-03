@@ -31,7 +31,7 @@
 	pf = push --force-with-lease
 	puo = push -u origin
 	rh = reset HEAD .
-	rm = rebase master
+	rem = rebase master
 	rpo = remote prune origin
 	s = status
 	stp = stash pop

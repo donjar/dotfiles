@@ -13,6 +13,8 @@ set cc=81
 set number
 " Show partial commands at bottom right
 set showcmd
+" Nani?
+set hidden
 
 " Set undo files and backup files in ~/.vimtmp
 set undofile backup
@@ -21,7 +23,7 @@ set directory=~/.vimtmp,.
 set undodir=~/.vimtmp,.
 
 " Disable mouse
-" set mouse=h
+set mouse=h
 
 " On `:set list` show space with ␣ and tab with >·
 set listchars=tab:>·,space:␣
@@ -47,8 +49,10 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 " Auto close parantheses
 Plug 'jiangmiao/auto-pairs'
-" Syntax checkers
-Plug 'w0rp/ale'
+" Language server
+Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
+" Fuzzy finder
+Plug 'junegunn/fzf'
 " File browser in sidebar
 Plug 'scrooloose/nerdtree'
 " Quoting/parenthesizing made simple
@@ -83,22 +87,9 @@ Plug 'peitalin/vim-jsx-typescript'
 Plug 'rust-lang/rust.vim'
 " Swift
 Plug 'keith/swift.vim'
-" Fish
-Plug 'dag/vim-fish'
 " Golang
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 call plug#end()
-
-"" ALE
-" Integrate with Airline
-let g:airline#extensions#ale#enabled = 1
-" Set 1000 ms delay before checking
-let g:ale_completion_delay = 1000
-" Do not lint on text change
-let g:ale_lint_on_text_changed = 'never'
-" Only those linters that I want
-let g:ale_linters_explicit = 1
-let g:ale_linters = {'ruby': ['rubocop']}
 
 "" NEOVIM
 " Escape terminal
@@ -114,6 +105,24 @@ let NERDTreeIgnore = ['\.pyc$']
 let base16colorspace = 256
 colorscheme base16-dracula
 
+"" LANGUAGE CLIENT
+let g:LanguageClient_serverCommands = {
+      \ 'python': ['pyls'],
+      \ }
+
+let g:LanguageClient_settingsPath = "~/.config/nvim/language-client/settings.json"
+
+" Apply mappings only for buffers with supported filetypes
+function LC_maps()
+  if has_key(g:LanguageClient_serverCommands, &filetype)
+    nnoremap <silent> K :call LanguageClient_contextMenu()<CR>
+    nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+    nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+    nnoremap <silent> gr :call LanguageClient#textDocument_references()<CR>
+  endif
+endfunction
+autocmd FileType * call LC_maps()
+
 "" DEOPLETE
 " Enable it
 let g:deoplete#enable_at_startup = 1
@@ -124,7 +133,7 @@ inoremap <S-Tab> <C-p>
 " Auto close after enter
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 function! s:my_cr_function() abort
- return deoplete#close_popup() . "\<CR>"
+  return deoplete#close_popup() . "\<CR>"
 endfunction
 
 "" RAINBOW PARANTHESES
@@ -134,21 +143,21 @@ au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
 
 let g:rbpt_colorpairs = [
-    \ ['brown',       'RoyalBlue3'],
-    \ ['Darkblue',    'SeaGreen3'],
-    \ ['darkgray',    'DarkOrchid3'],
-    \ ['darkgreen',   'firebrick3'],
-    \ ['darkcyan',    'RoyalBlue3'],
-    \ ['darkred',     'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['brown',       'firebrick3'],
-    \ ['gray',        'RoyalBlue3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['Darkblue',    'firebrick3'],
-    \ ['darkgreen',   'RoyalBlue3'],
-    \ ['darkcyan',    'SeaGreen3'],
-    \ ['darkred',     'DarkOrchid3'],
-    \ ]
+      \ ['brown',       'RoyalBlue3'],
+      \ ['Darkblue',    'SeaGreen3'],
+      \ ['darkgray',    'DarkOrchid3'],
+      \ ['darkgreen',   'firebrick3'],
+      \ ['darkcyan',    'RoyalBlue3'],
+      \ ['darkred',     'SeaGreen3'],
+      \ ['darkmagenta', 'DarkOrchid3'],
+      \ ['brown',       'firebrick3'],
+      \ ['gray',        'RoyalBlue3'],
+      \ ['darkmagenta', 'DarkOrchid3'],
+      \ ['Darkblue',    'firebrick3'],
+      \ ['darkgreen',   'RoyalBlue3'],
+      \ ['darkcyan',    'SeaGreen3'],
+      \ ['darkred',     'DarkOrchid3'],
+      \ ]
 
 "" LANGUAGE-SPECIFIC
 
@@ -156,16 +165,11 @@ let g:rbpt_colorpairs = [
 let g:vimtex_latexmk_options = '-pdf -shell-escape -verbose -file-line-error -synctex=1 -interaction=nonstopmode'
 " Deoplete for LaTeX
 if !exists('g:deoplete#omni#input_patterns')
-    let g:deoplete#omni#input_patterns = {}
+  let g:deoplete#omni#input_patterns = {}
 endif
 let g:deoplete#omni#input_patterns.tex = g:vimtex#re#deoplete
 " Don't open quickfix
 let g:vimtex_quickfix_mode = 0
-
-" Python: don't use PEP8 recommendation of 4 spaces
-" let g:python_recommended_style = 0
-
-let g:ale_linters = {'python': []}
 
 " Swift: use 4 spaces
 autocmd FileType swift setlocal shiftwidth=4 tabstop=4
