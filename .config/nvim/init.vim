@@ -98,8 +98,9 @@ tnoremap <esc> <C-\><C-n>
 "" NERDTREE - file browser in sidebar
 " Enter NERDTree on start
 autocmd VimEnter * :NERDTree
-" Ignore pyc files
-let NERDTreeIgnore = ['\.pyc$']
+
+let NERDTreeIgnore = ['\.pyc$', '__pycache__']
+nnoremap <Space> :NERDTreeFind<CR>
 
 "" BASE16 - vim/terminal color scheme
 let base16colorspace = 256
@@ -107,8 +108,10 @@ colorscheme base16-dracula
 
 "" LANGUAGE CLIENT
 let g:LanguageClient_serverCommands = {
-      \ 'python': ['pyls'],
-      \ }
+    \ 'python': ['pyls'],
+    \ 'typescript': ['typescript-language-server', '--stdio'],
+    \ 'typescript.tsx': ['typescript-language-server', '--stdio'],
+    \ }
 
 let g:LanguageClient_settingsPath = "~/.config/nvim/language-client/settings.json"
 
@@ -135,6 +138,8 @@ inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 function! s:my_cr_function() abort
   return deoplete#close_popup() . "\<CR>"
 endfunction
+" Don't show preview window
+set completeopt-=preview
 
 "" RAINBOW PARANTHESES
 au VimEnter * RainbowParenthesesToggle
@@ -185,6 +190,9 @@ hi tsxCloseTag ctermfg=Blue
 hi tsxAttributeBraces ctermfg=Blue
 hi tsxEqual ctermfg=Blue
 hi tsxAttrib ctermfg=Yellow
+
+" Python: linebreak at 100 chars
+autocmd FileType python setlocal cc=101
 
 " C: use 4 spaces
 autocmd FileType c setlocal shiftwidth=4 tabstop=4
