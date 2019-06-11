@@ -89,6 +89,8 @@ Plug 'rust-lang/rust.vim'
 Plug 'keith/swift.vim'
 " Golang
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+" Q#
+Plug 'gootorov/q-sharp.vim'
 call plug#end()
 
 "" NEOVIM
@@ -202,3 +204,6 @@ let g:rust_recommended_style = 0
 
 " Golang: use tabs
 autocmd FileType go setlocal noexpandtab
+
+" Q#: use 4 spaces
+autocmd FileType qs setlocal shiftwidth=4 tabstop=4
