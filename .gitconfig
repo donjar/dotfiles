@@ -39,5 +39,5 @@
 	rpo = remote prune origin
 	s = status
 	stp = stash pop
-	sts = stash show
+	sts = stash show -p
 	st = stash

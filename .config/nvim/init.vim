@@ -95,6 +95,10 @@ call plug#end()
 " Escape terminal
 tnoremap <esc> <C-\><C-n>
 
+"" FZF
+" Call ripgrep on current selected word
+nnoremap <silent> gf :call fzf#vim#grep("grep -rnw --exclude-dir=.git --color=always " . expand("<cword>"), 1)<CR>
+
 "" NERDTREE - file browser in sidebar
 " Enter NERDTree on start
 autocmd VimEnter * :NERDTree
