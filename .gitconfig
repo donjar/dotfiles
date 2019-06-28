@@ -29,8 +29,9 @@
 	dw = diff --word-diff
 	lg = log --oneline --graph
 	ma = merge --abort
+	mm = merge master
 	pf = push --force-with-lease
-	puo = push -u origin
+	puo = !git push -u origin $(git symbolic-ref --short HEAD)
 	ra = rebase --abort
 	rc = rebase --continue
 	rem = rebase master
@@ -38,6 +39,10 @@
 	rim = rebase -i master
 	rpo = remote prune origin
 	s = status
+	stl = stash list
 	stp = stash pop
 	sts = stash show -p
 	st = stash
+	ub = !git checkout master && git pull && git checkout - && git rebase master && git push --force-with-lease
+	ubi = !git checkout master && git pull && git checkout - && git rebase -i master && git push --force-with-lease
+	ubm = !git checkout master && git pull && git checkout - && git merge master
