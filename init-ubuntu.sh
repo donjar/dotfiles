@@ -5,7 +5,7 @@ if [[ `uname` != 'Linux' ]]; then
   exit
 fi
 
-sudo apt install software-properties-common curl -y
+sudo apt install software-properties-common curl git -y
 
 mkdir ~/.vimtmp/
 mkdir -p ~/.config/nvim/autoload/
@@ -19,6 +19,9 @@ ln -fs $PWD/.config/nvim/init.vim ~/.config/nvim/init.vim
 ln -fs $PWD/.config/nvim/language-client/settings.json ~/.config/nvim/language-client/settings.json
 ln -fs $PWD/.gitconfig ~
 ln -fs $PWD/.global_gitignore ~
+
+# base16 color scheme
+git clone https://github.com/chriskempson/base16-shell.git ~/.config/base16-shell
 
 # pyenv
 curl https://pyenv.run | bash
