@@ -1,24 +1,24 @@
 #!/bin/bash
-set -ux
-
-sudo apt install software-properties-common -y
+set -uxe
 
 if [[ `uname` != 'Linux' ]]; then
   exit
 fi
 
+sudo apt install software-properties-common curl -y
+
 mkdir ~/.vimtmp/
 mkdir -p ~/.config/nvim/autoload/
 mkdir -p ~/.config/nvim/language-client/
 
-ln -s $PWD/.bashrc ~
-ln -s $PWD/.config/fish/config.fish ~/.config/fish/config.fish
-ln -s $PWD/.config/fish/fishfile ~/.config/fish/fishfile
-ln -s $PWD/.config/nvim/autoload/plug.vim ~/.config/nvim/autoload/plug.vim
-ln -s $PWD/.config/nvim/init.vim ~/.config/nvim/init.vim
-ln -s $PWD/.config/nvim/language-client/settings.json ~/.config/nvim/language-client/settings.json
-ln -s $PWD/.gitconfig ~
-ln -s $PWD/.global_gitignore ~
+ln -fs $PWD/.bashrc ~
+ln -fs $PWD/.config/fish/config.fish ~/.config/fish/config.fish
+ln -fs $PWD/.config/fish/fishfile ~/.config/fish/fishfile
+ln -fs $PWD/.config/nvim/autoload/plug.vim ~/.config/nvim/autoload/plug.vim
+ln -fs $PWD/.config/nvim/init.vim ~/.config/nvim/init.vim
+ln -fs $PWD/.config/nvim/language-client/settings.json ~/.config/nvim/language-client/settings.json
+ln -fs $PWD/.gitconfig ~
+ln -fs $PWD/.global_gitignore ~
 
 # pyenv
 curl https://pyenv.run | bash
