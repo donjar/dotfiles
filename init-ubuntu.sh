@@ -44,4 +44,4 @@ curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fi
 fish -c "cat ~/.config/fish/fishfile | fisher add"
 
 # pyls
-pip install pyls
+pip install python-language-server

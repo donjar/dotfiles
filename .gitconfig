@@ -10,6 +10,7 @@
 	default = simple
 [core]
 	excludesfile = /home/donjar/.global_gitignore
+	editor = nvim
 [help]
 	autocorrect = 1
 [alias]
