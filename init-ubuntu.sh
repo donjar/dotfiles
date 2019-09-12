@@ -15,6 +15,7 @@ ln -fs $PWD/.bashrc ~
 ln -fs $PWD/.config/fish/config.fish ~/.config/fish/config.fish
 ln -fs $PWD/.config/fish/fishfile ~/.config/fish/fishfile
 ln -fs $PWD/.config/nvim/autoload/plug.vim ~/.config/nvim/autoload/plug.vim
+ln -fs $PWD/.config/nvim/autoload/fzf ~/.config/nvim/autoload/fzf
 ln -fs $PWD/.config/nvim/init.vim ~/.config/nvim/init.vim
 ln -fs $PWD/.config/nvim/language-client/settings.json ~/.config/nvim/language-client/settings.json
 ln -fs $PWD/.gitconfig ~
