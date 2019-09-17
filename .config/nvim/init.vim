@@ -121,6 +121,8 @@ let g:LanguageClient_serverCommands = {
 
 let g:LanguageClient_settingsPath = "~/.config/nvim/language-client/settings.json"
 
+let g:LanguageClient_useVirtualText = 0
+
 " Apply mappings only for buffers with supported filetypes
 function LC_maps()
   if has_key(g:LanguageClient_serverCommands, &filetype)
