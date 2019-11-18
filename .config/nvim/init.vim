@@ -118,8 +118,6 @@ let g:LanguageClient_serverCommands = {
     \ 'rust': ['rls'],
     \ }
 
-" let g:LanguageClient_settingsPath = "~/.config/nvim/language-client/settings.json"
-
 let g:LanguageClient_useVirtualText = 0
 
 " Apply mappings only for buffers with supported filetypes

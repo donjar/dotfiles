@@ -8,6 +8,7 @@ fi
 sudo apt-get install --no-install-recommends -y software-properties-common git make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
 
 mkdir ~/.vimtmp/
+mkdir -p ~/.config/fish
 mkdir -p ~/.config/nvim/autoload/
 mkdir -p ~/.config/nvim/language-client/
 
@@ -17,7 +18,6 @@ ln -fs $PWD/.config/fish/fishfile ~/.config/fish/fishfile
 ln -fs $PWD/.config/nvim/autoload/plug.vim ~/.config/nvim/autoload/plug.vim
 ln -fs $PWD/.config/nvim/autoload/fzf ~/.config/nvim/autoload/fzf
 ln -fs $PWD/.config/nvim/init.vim ~/.config/nvim/init.vim
-ln -fs $PWD/.config/nvim/language-client/settings.json ~/.config/nvim/language-client/settings.json
 ln -fs $PWD/.gitconfig ~
 ln -fs $PWD/.global_gitignore ~
 
@@ -30,13 +30,11 @@ pyenv install 3.7.3
 pyenv global 3.7.3
 
 # neovim
-sudo add-apt-repository ppa:neovim-ppa/stable
-sudo apt update
 sudo apt install neovim -y
 pip install pynvim
 
 # fish
-sudo apt-add-repository ppa:fish-shell/release-3
+sudo apt-add-repository -y ppa:fish-shell/release-3
 sudo apt update
 sudo apt install fish -y
 
