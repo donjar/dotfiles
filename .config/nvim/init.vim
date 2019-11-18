@@ -13,8 +13,6 @@ set cc=81
 set number
 " Show partial commands at bottom right
 set showcmd
-" Nani?
-set hidden
 
 " Set undo files and backup files in ~/.vimtmp
 set undofile backup
@@ -117,9 +115,10 @@ let g:LanguageClient_serverCommands = {
     \ 'python': ['pyls'],
     \ 'typescript': ['typescript-language-server', '--stdio'],
     \ 'typescript.tsx': ['typescript-language-server', '--stdio'],
+    \ 'rust': ['rls'],
     \ }
 
-let g:LanguageClient_settingsPath = "~/.config/nvim/language-client/settings.json"
+" let g:LanguageClient_settingsPath = "~/.config/nvim/language-client/settings.json"
 
 let g:LanguageClient_useVirtualText = 0
 
