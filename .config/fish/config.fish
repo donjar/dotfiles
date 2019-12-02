@@ -17,9 +17,9 @@ function c
   g++ $argv ; and echo 's' ; and ./a.out
 end
 
-set -gx PATH '/home/donjar/.pyenv/shims' '/home/donjar/.pyenv/bin' $PATH
+set -gx PATH "$HOME/.pyenv/shims" "$HOME/.pyenv/bin" $PATH
 set -gx PYENV_SHELL fish
-source '/home/donjar/.pyenv/libexec/../completions/pyenv.fish'
+source "$HOME/.pyenv/libexec/../completions/pyenv.fish"
 command pyenv rehash 2>/dev/null
 function pyenv
   set command $argv[1]
