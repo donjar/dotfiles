@@ -1,11 +1,11 @@
 #!/bin/bash
 set -uxe
 
-if [[ `uname` != 'Linux' ]]; then
-  exit
+if [[ `uname` == 'Linux' ]]; then
+  sudo apt-get install --no-install-recommends -y software-properties-common git make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+elif [[ `uname` == 'Darwin' ]]; then
+  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 fi
-
-sudo apt-get install --no-install-recommends -y software-properties-common git make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
 
 mkdir ~/.vimtmp/
 mkdir -p ~/.config/fish
@@ -26,17 +26,30 @@ git clone https://github.com/chriskempson/base16-shell.git ~/.config/base16-shel
 
 # pyenv
 curl https://pyenv.run | bash
+
+export PATH="/Users/donjar/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
 pyenv install 3.7.3
 pyenv global 3.7.3
 
 # neovim
-sudo apt install neovim -y
+if [[ `uname` == 'Linux' ]]; then
+  sudo apt install neovim -y
+elif [[ `uname` == 'Darwin' ]]; then
+  brew install neovim
+fi
 pip install pynvim
 
 # fish
-sudo apt-add-repository -y ppa:fish-shell/release-3
-sudo apt update
-sudo apt install fish -y
+if [[ `uname` == 'Linux' ]]; then
+  sudo apt-add-repository -y ppa:fish-shell/release-3
+  sudo apt update
+  sudo apt install fish -y
+elif [[ `uname` == 'Darwin' ]]; then
+  brew install fish
+fi
 
 # fisher
 curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fish
