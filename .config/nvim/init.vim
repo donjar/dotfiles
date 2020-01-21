@@ -118,7 +118,7 @@ let g:LanguageClient_serverCommands = {
     \ 'rust': ['rls'],
     \ }
 
-let g:LanguageClient_useVirtualText = 0
+let g:LanguageClient_diagnosticsEnable = 0
 
 " Apply mappings only for buffers with supported filetypes
 function LC_maps()
