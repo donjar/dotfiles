@@ -196,8 +196,8 @@ hi tsxAttributeBraces ctermfg=Blue
 hi tsxEqual ctermfg=Blue
 hi tsxAttrib ctermfg=Yellow
 
-" Python: linebreak at 100 chars
-autocmd FileType python setlocal cc=101
+" Python: linebreak at 88 chars, like Black
+autocmd FileType python setlocal cc=89
 
 " C: use 4 spaces
 autocmd FileType c setlocal shiftwidth=4 tabstop=4
