@@ -18,6 +18,7 @@
 	ap = add -p
 	bd = branch -D
 	ca = commit --amend
+	can = commit --amend --no-edit
 	cb = checkout -b
 	cl = clean -fdxi
 	cm = commit -m
