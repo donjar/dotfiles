@@ -202,9 +202,6 @@ autocmd FileType python setlocal cc=89
 " C: use 4 spaces
 autocmd FileType c setlocal shiftwidth=4 tabstop=4
 
-" Rust: don't use recommendation of 4 spcaes
-let g:rust_recommended_style = 0
-
 " Golang: use tabs
 autocmd FileType go setlocal noexpandtab
 

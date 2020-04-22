@@ -19,6 +19,7 @@
 	bd = branch -D
 	ca = commit --amend
 	can = commit --amend --no-edit
+	cats = !git add -A && git commit -m 'Change according to suggestions' && git push
 	cb = checkout -b
 	cl = clean -fdxi
 	cm = commit -m
