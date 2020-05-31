@@ -9,7 +9,7 @@
 [push]
 	default = simple
 [core]
-	excludesfile = /home/donjar/.global_gitignore
+	excludesfile = ~/.global_gitignore
 	editor = nvim
 [help]
 	autocorrect = 1

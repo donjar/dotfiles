@@ -27,12 +27,16 @@ git clone https://github.com/chriskempson/base16-shell.git ~/.config/base16-shel
 # pyenv
 curl https://pyenv.run | bash
 
-export PATH="/Users/donjar/.pyenv/bin:$PATH"
+if [[ `uname` == 'Linux' ]]; then
+  export PATH="/home/donjar/.pyenv/bin:$PATH"
+elif [[ `uname` == 'Darwin' ]]; then
+  export PATH="/Users/donjar/.pyenv/bin:$PATH"
+fi
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
-pyenv install 3.7.3
-pyenv global 3.7.3
+pyenv install 3.8.3
+pyenv global 3.8.3
 
 # neovim
 if [[ `uname` == 'Linux' ]]; then

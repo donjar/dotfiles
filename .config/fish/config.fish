@@ -6,12 +6,12 @@ end
 set -l OS (uname)
 if test $OS = "Linux"
   alias ls "ls --color=auto"
+  setxkbmap -option caps:escape
 else if test $OS = "Darwin"
   alias ls "ls -G"
 end
-rvm default
 
-setxkbmap -option caps:escape
+rvm default
 
 function c
   g++ $argv ; and echo 's' ; and ./a.out
