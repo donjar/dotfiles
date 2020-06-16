@@ -134,6 +134,7 @@ autocmd FileType * call LC_maps()
 "" DEOPLETE
 " Enable it
 let g:deoplete#enable_at_startup = 1
+let g:deoplete#auto_complete_delay = 150
 " Let <Tab> also do completion
 inoremap <expr><Tab>  pumvisible() ? "\<C-n>" : "<Tab>"
 " Map Shift + Tab to prev
@@ -174,10 +175,9 @@ let g:rbpt_colorpairs = [
 " LaTeX: default latexmk options for vimtex
 let g:vimtex_latexmk_options = '-pdf -shell-escape -verbose -file-line-error -synctex=1 -interaction=nonstopmode'
 " Deoplete for LaTeX
-if !exists('g:deoplete#omni#input_patterns')
-  let g:deoplete#omni#input_patterns = {}
-endif
-let g:deoplete#omni#input_patterns.tex = g:vimtex#re#deoplete
+call deoplete#custom#var('omni', 'input_patterns', {
+      \ 'tex' : g:vimtex#re#deoplete,
+\})
 " Don't open quickfix
 let g:vimtex_quickfix_mode = 0
 
