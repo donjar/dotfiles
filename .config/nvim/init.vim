@@ -57,7 +57,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-surround'
 " Dark powered asynchronous completion framework (?)
 if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'Shougo/deoplete.nvim', { 'tag': '5.1', 'do': ':UpdateRemotePlugins' }
 else
   Plug 'Shougo/deoplete.nvim'
   Plug 'roxma/nvim-yarp'
@@ -134,7 +134,6 @@ autocmd FileType * call LC_maps()
 "" DEOPLETE
 " Enable it
 let g:deoplete#enable_at_startup = 1
-let g:deoplete#auto_complete_delay = 150
 " Let <Tab> also do completion
 inoremap <expr><Tab>  pumvisible() ? "\<C-n>" : "<Tab>"
 " Map Shift + Tab to prev

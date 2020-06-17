@@ -49,3 +49,5 @@
 	ub = !git checkout master && git pull && git checkout - && git rebase master && git push --force-with-lease
 	ubi = !git checkout master && git pull && git checkout - && git rebase -i master && git push --force-with-lease
 	ubm = !git checkout master && git pull && git checkout - && git merge master && git push
+[pull]
+	rebase = true
