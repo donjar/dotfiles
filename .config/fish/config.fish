@@ -32,3 +32,9 @@ function pyenv
     command pyenv "$command" $argv
   end
 end
+
+set -gx LC_ALL en_GB.UTF-8
+
+function gr
+  grep -rnw --include="*.$argv[1]" --color=always $argv[2] .
+end
