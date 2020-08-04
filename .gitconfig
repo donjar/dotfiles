@@ -42,6 +42,8 @@
 	rim = rebase -i master
 	rpo = remote prune origin
 	s = status
+	sm = !git checkout master && git pull && git checkout - && git diff master > /tmp/a.patch && git checkout master && git apply /tmp/a.patch && rm /tmp/a.patch && git add -A && git commit && git push
+	std = stash drop
 	stl = stash list
 	stp = stash pop
 	sts = stash show -p

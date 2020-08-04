@@ -146,6 +146,9 @@ endfunction
 " Don't show preview window
 set completeopt-=preview
 
+"" AUTOPAIRS
+let g:AutoPairsShortcutToggle = ''
+
 "" RAINBOW PARANTHESES
 au VimEnter * RainbowParenthesesToggle
 au Syntax * RainbowParenthesesLoadRound
