@@ -13,6 +13,8 @@ set cc=81
 set number
 " Show partial commands at bottom right
 set showcmd
+" Process syntax indefinitely
+set synmaxcol=0
 
 " Set undo files and backup files in ~/.vimtmp
 set undofile backup
@@ -29,8 +31,10 @@ set listchars=tab:>·,space:␣
 " Use \ as local leader, for LaTeX etc.
 let maplocalleader='\'
 
-" Map Ctrl+N to :noh
+" C-<char> maps
 nnoremap <C-n> :noh<CR>
+nnoremap <C-j> 5j
+nnoremap <C-k> 5k
 
 "" PLUGINS
 call plug#begin()
@@ -116,6 +120,7 @@ let g:LanguageClient_serverCommands = {
     \ 'typescript': ['typescript-language-server', '--stdio'],
     \ 'typescript.tsx': ['typescript-language-server', '--stdio'],
     \ 'rust': ['rls'],
+    \ 'cpp': ['clangd'],
     \ }
 
 let g:LanguageClient_diagnosticsEnable = 0
@@ -209,3 +214,7 @@ autocmd FileType go setlocal noexpandtab
 
 " Q#: use 4 spaces
 autocmd FileType qs setlocal shiftwidth=4 tabstop=4
+
+" XML
+let g:xml_syntax_folding=1
+autocmd FileType xml setlocal foldmethod=syntax
