@@ -35,6 +35,8 @@ let maplocalleader='\'
 nnoremap <C-n> :noh<CR>
 nnoremap <C-j> 5j
 nnoremap <C-k> 5k
+vnoremap <C-j> 5j
+vnoremap <C-k> 5k
 
 "" PLUGINS
 call plug#begin()
