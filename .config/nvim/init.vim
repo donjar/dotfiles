@@ -95,6 +95,8 @@ Plug 'keith/swift.vim'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 " Q#
 Plug 'gootorov/q-sharp.vim'
+" csv
+Plug 'chrisbra/csv.vim'
 call plug#end()
 
 "" NEOVIM

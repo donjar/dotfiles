@@ -38,3 +38,9 @@ set -gx LC_ALL en_GB.UTF-8
 function gr
   grep -rnw --include="*.$argv[1]" --color=always $argv[3..-1] $argv[2] .
 end
+
+eval (direnv hook fish)
+
+abbr run 'python workflow/run_predicting.py easyrun -f'
+abbr ht 'python api/trvhydra_http/trvhydra_http_app.py'
+abbr k 'kubectl'
