@@ -2,7 +2,7 @@
 set -uxe
 
 if [[ `uname` == 'Linux' ]]; then
-  sudo apt-get install --no-install-recommends -y software-properties-common git make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+  sudo apt-get install --no-install-recommends -y software-properties-common git make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev direnv
 elif [[ `uname` == 'Darwin' ]]; then
   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 fi
@@ -35,8 +35,8 @@ fi
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
-pyenv install 3.8.3
-pyenv global 3.8.3
+pyenv install 3.10.1
+pyenv global 3.10.1
 
 # neovim
 if [[ `uname` == 'Linux' ]]; then
@@ -57,7 +57,7 @@ fi
 
 # fisher
 curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fish
-fish -c "cat ~/.config/fish/fishfile | fisher add"
+fish -c "cat ~/.config/fish/fishfile | fisher install"
 
 # pyls
 pip install python-language-server

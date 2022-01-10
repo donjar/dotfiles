@@ -11,8 +11,6 @@ else if test $OS = "Darwin"
   alias ls "ls -G"
 end
 
-rvm default
-
 function c
   g++ $argv ; and echo 's' ; and ./a.out
 end
