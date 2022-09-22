@@ -16,12 +16,13 @@
 [alias]
 	aa = add -A
 	ap = add -p
+	b = branch
 	bd = branch -D
 	ca = commit --amend
 	can = commit --amend --no-edit
 	cats = !git add -A && git commit -m 'Change according to suggestions' && git push
 	cb = checkout -b
-	cl = clean -fdxi
+	cl = clean -dxi
 	cm = commit -m
 	co = checkout
 	cp = checkout -p --

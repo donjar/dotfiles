@@ -15,6 +15,8 @@ set number
 set showcmd
 " Process syntax indefinitely
 set synmaxcol=0
+" Prevent closing window if it is unsaved
+set nohidden
 
 " Set undo files and backup files in ~/.vimtmp
 set undofile backup
@@ -95,8 +97,6 @@ Plug 'keith/swift.vim'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 " Q#
 Plug 'gootorov/q-sharp.vim'
-" csv
-Plug 'chrisbra/csv.vim'
 call plug#end()
 
 "" NEOVIM
@@ -123,11 +123,15 @@ let g:LanguageClient_serverCommands = {
     \ 'python': ['pyls'],
     \ 'typescript': ['typescript-language-server', '--stdio'],
     \ 'typescript.tsx': ['typescript-language-server', '--stdio'],
+    \ 'typescriptreact': ['typescript-language-server', '--stdio'],
+    \ 'javascript': ['typescript-language-server', '--stdio'],
+    \ 'javascript.jsx': ['typescript-language-server', '--stdio'],
     \ 'rust': ['rls'],
     \ 'cpp': ['clangd'],
     \ }
 
 let g:LanguageClient_diagnosticsEnable = 0
+let g:LanguageClient_loggingFile = '/tmp/LanguageClient.log'
 
 " Apply mappings only for buffers with supported filetypes
 function LC_maps()

@@ -40,7 +40,9 @@ pyenv global 3.10.1
 
 # neovim
 if [[ `uname` == 'Linux' ]]; then
-  sudo apt install neovim -y
+  sudo add-apt-repository ppa:neovim-ppa/stable
+  sudo apt-get update
+  sudo apt-get install neovim -y
 elif [[ `uname` == 'Darwin' ]]; then
   brew install neovim
 fi
