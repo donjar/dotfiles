@@ -65,7 +65,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-surround'
 " Dark powered asynchronous completion framework (?)
 if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'tag': '5.1', 'do': ':UpdateRemotePlugins' }
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
   Plug 'Shougo/deoplete.nvim'
   Plug 'roxma/nvim-yarp'
