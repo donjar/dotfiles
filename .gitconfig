@@ -8,6 +8,7 @@
 	ui = true
 [push]
 	default = simple
+	autoSetupRemote = true
 [core]
 	excludesfile = ~/.global_gitignore
 	editor = nvim
@@ -22,6 +23,7 @@
 	can = commit --amend --no-edit
 	cats = !git add -A && git commit -m 'Change according to suggestions' && git push
 	cb = checkout -b
+	ch = cherry-pick
 	cl = clean -dxi
 	cm = commit -m
 	co = checkout
