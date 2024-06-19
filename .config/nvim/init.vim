@@ -58,7 +58,8 @@ Plug 'jiangmiao/auto-pairs'
 " Language server
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
 " Fuzzy finder
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 " File browser in sidebar
 Plug 'scrooloose/nerdtree'
 " Quoting/parenthesizing made simple
@@ -97,7 +98,14 @@ Plug 'keith/swift.vim'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 " Q#
 Plug 'gootorov/q-sharp.vim'
+" Terraform
+Plug 'hashivim/vim-terraform'
+" GraphQL
+Plug 'jparise/vim-graphql'
 call plug#end()
+
+au VimEnter * delcommand Files
+au VimEnter * delcommand Filetypes
 
 "" NEOVIM
 " Escape terminal
@@ -120,13 +128,13 @@ colorscheme base16-dracula
 
 "" LANGUAGE CLIENT
 let g:LanguageClient_serverCommands = {
-    \ 'python': ['pyls'],
+    \ 'python': ['pylsp', '--log-file', '/tmp/pylsp.txt'],
     \ 'typescript': ['typescript-language-server', '--stdio'],
     \ 'typescript.tsx': ['typescript-language-server', '--stdio'],
     \ 'typescriptreact': ['typescript-language-server', '--stdio'],
     \ 'javascript': ['typescript-language-server', '--stdio'],
     \ 'javascript.jsx': ['typescript-language-server', '--stdio'],
-    \ 'rust': ['rls'],
+    \ 'rust': ['rust-analyzer'],
     \ 'cpp': ['clangd'],
     \ }
 

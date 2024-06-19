@@ -1,3 +1,5 @@
 .idea
 .DS_Store
 .envrc
+dump.rdb
+__pycache__

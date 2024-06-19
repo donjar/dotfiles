@@ -184,3 +184,6 @@ export PATH="/usr/local/lib/nodejs/node-v10.14-1/bin:$PATH"
 export PATH="/home/donjar/.pyenv/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
+
+# added by Snowflake SnowSQL installer v1.2
+export PATH=/Applications/SnowSQL.app/Contents/MacOS:$PATH

@@ -40,6 +40,8 @@ end
 
 direnv hook fish | source
 
-abbr run 'python workflow/run_predicting.py easyrun -f'
-abbr ht 'python api/trvhydra_http/trvhydra_http_app.py'
 abbr k 'kubectl'
+abbr tf 'terraform'
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/opt/google-cloud-sdk/path.fish.inc' ]; . '/opt/google-cloud-sdk/path.fish.inc'; end
