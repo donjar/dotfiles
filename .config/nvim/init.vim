@@ -1,49 +1,5 @@
-"" GENERAL
-" Use 2 spaces and some magic
-set tabstop=2
-set softtabstop=0
-set shiftwidth=2
-" Expand tabs into spaces
-set expandtab
-" Highlight searches
-set hlsearch
-" Add line marker at 81th character
-set cc=81
-" Show line numbers
-set number
-" Show partial commands at bottom right
-set showcmd
-" Process syntax indefinitely
-set synmaxcol=0
-" Prevent closing window if it is unsaved
-set nohidden
-
-" Set undo files and backup files in ~/.vimtmp
-set undofile backup
-set backupdir=~/.vimtmp,.
-set directory=~/.vimtmp,.
-set undodir=~/.vimtmp,.
-
-" Disable mouse
-set mouse=h
-
-" On `:set list` show space with ␣ and tab with >·
-set listchars=tab:>·,space:␣
-
-" Use \ as local leader, for LaTeX etc.
-let maplocalleader='\'
-
-" C-<char> maps
-nnoremap <C-n> :noh<CR>
-nnoremap <C-j> 5j
-nnoremap <C-k> 5k
-vnoremap <C-j> 5j
-vnoremap <C-k> 5k
-
 "" PLUGINS
 call plug#begin()
-" Use sensible defaults
-Plug 'tpope/vim-sensible'
 " Pretty status line
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -55,34 +11,83 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 " Auto close parantheses
 Plug 'jiangmiao/auto-pairs'
-" Fuzzy finder
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
 " File browser in sidebar
 Plug 'scrooloose/nerdtree'
 " Quoting/parenthesizing made simple
 Plug 'tpope/vim-surround'
 " Auto add `end` on Ruby etc.
 Plug 'tpope/vim-endwise'
-" Colorful parans
-Plug 'kien/rainbow_parentheses.vim'
-
+" Treesitter
 Plug 'nvim-treesitter/nvim-treesitter'
-
+" LSP
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
-
+" Telescope
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.8' }
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release' }
+" Copilot
 Plug 'zbirenbaum/copilot.lua'
+" Avante
+Plug 'stevearc/dressing.nvim'
+Plug 'MunifTanjim/nui.nvim'
+Plug 'nvim-tree/nvim-web-devicons' "or Plug 'echasnovski/mini.icons'
+Plug 'HakonHarnes/img-clip.nvim'
+Plug 'yetone/avante.nvim', { 'branch': 'main', 'do': 'make' }
 call plug#end()
 
-au VimEnter * delcommand Files
-au VimEnter * delcommand Filetypes
-
 lua <<EOF
+  -- Use 2 spaces and some magic
+  vim.opt.tabstop = 2
+  vim.opt.softtabstop = 0
+  vim.opt.shiftwidth = 2
+  -- Expand tabs into spaces
+  vim.opt.expandtab = true
+  -- Except for golang, authzed
+  vim.api.nvim_create_autocmd('FileType', {
+    pattern = { 'go', 'authzed' },
+    callback = function()
+      vim.opt.expandtab = false
+    end,
+  })
+  -- Add line marker at 81th character
+  vim.opt.colorcolumn = "81"
+  -- Show line numbers
+  vim.opt.number = true
+  -- Process syntax indefinitely
+  vim.opt.synmaxcol = 0
+
+  vim.opt.hidden = false
+
+  -- Set undo files and backup files in ~/.vimtmp
+  vim.opt.backup = true
+  vim.opt.undofile = true
+  vim.opt.backupdir = { vim.fn.expand('~/.vimtmp'), '.' }
+  vim.opt.directory = { vim.fn.expand('~/.vimtmp'), '.' }
+  vim.opt.undodir = { vim.fn.expand('~/.vimtmp'), '.' }
+
+  -- Disable mouse
+  vim.opt.mouse = ''
+
+  -- Make Y behave like y instead of y$
+  vim.keymap.set('n', 'Y', 'y')
+
+  -- On `:set list` show space with ␣ and tab with >·
+  vim.opt.listchars = { tab = '>·', space = '␣' }
+
+  -- Use \ as local leader, for LaTeX etc.
+  vim.g.maplocalleader = '\\'
+
+  -- C-<char> maps
+  vim.keymap.set("n", "<C-c>", ":cclose<CR>")
+  vim.keymap.set({ "n", "v" }, "<C-j>", "5j")
+  vim.keymap.set({ "n", "v" }, "<C-k>", "5k")
+
+  -- CMP
   local cmp = require('cmp')
 
   cmp.setup({
@@ -99,10 +104,10 @@ lua <<EOF
       { name = 'nvim_lsp' },
     }, {
       { name = 'buffer' },
-    })
+    }),
+    preselect = cmp.PreselectMode.None,
   })
 
-  -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
   cmp.setup.cmdline({ '/', '?' }, {
     mapping = cmp.mapping.preset.cmdline(),
     sources = {
@@ -110,7 +115,6 @@ lua <<EOF
     }
   })
 
-  -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
   cmp.setup.cmdline(':', {
     mapping = cmp.mapping.preset.cmdline(),
     sources = cmp.config.sources({
@@ -121,83 +125,105 @@ lua <<EOF
     matching = { disallow_symbol_nonprefix_matching = false }
   })
 
-  -- Set up lspconfig.
+  -- NVIM LSP
   local capabilities = require('cmp_nvim_lsp').default_capabilities()
   local lspconfig = require('lspconfig')
-  lspconfig.pylsp.setup({})
-  lspconfig.tsserver.setup({})
+  lspconfig.pylsp.setup({
+    plugins = {
+      ruff = {
+        enabled = true,
+        formatEnabled = true,
+      }
+    }
+  })
+  lspconfig.ts_ls.setup({
+    on_attach = function(client, bufnr)
+      vim.lsp.buf_notify(bufnr, "workspace/didChangeConfiguration", {
+        settings = {
+          typescript = {
+            format = {
+              convertTabsToSpaces = false
+            }
+          }
+        }
+      })
+    end,
+  })
   lspconfig.clangd.setup({})
   lspconfig.rust_analyzer.setup({})
   lspconfig.gopls.setup({})
 
+  -- Make LSP support jump to definition
   vim.api.nvim_create_autocmd('LspAttach', {
     callback = function(args)
       local client = vim.lsp.get_client_by_id(args.data.client_id)
       if client.supports_method('textDocument/definition') then
         vim.keymap.set('n', 'gd', vim.lsp.buf.definition)
       end
+      if client.supports_method('textDocument/references') then
+        vim.keymap.set('n', 'gr', vim.lsp.buf.references)
+      end
     end,
   })
 
-  vim.diagnostic.config({
-    virtual_text = false,
-    signs = false,
-    underline = false,
+  vim.api.nvim_create_autocmd('VimEnter', {
+    callback = function()
+      vim.g["airline#extensions#nvimlsp#enabled"] = 0
+      vim.diagnostic.enable(false)
+    end,
+  })
+  vim.keymap.set('n', '<C-n>', function()
+    vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+  end)
+  vim.api.nvim_create_autocmd("BufWritePre", {
+    callback = function()
+      vim.lsp.buf.format({ async = false })
+    end
   })
 
-  require('copilot').setup({
-    suggestion = {
-      keymap = {
-        accept = "<right>",
-      }
-    }
+  -- TELESCOPE
+  local builtin = require('telescope.builtin')
+  vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
+  vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
+  vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
+  vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
+
+  -- COPILOT
+  -- require('copilot').setup({
+  --   suggestion = {
+  --     keymap = {
+  --       accept = "<right>",
+  --       next = '<C-Space>',
+  --     }
+  --   }
+  -- })
+
+  -- AVANTE
+  require('avante_lib').load()
+  require('avante').setup({})
+
+  -- TREESITTER
+  require("nvim-treesitter.configs").setup({
+    auto_install = true,
+    highlight = {
+      enable = true,
+      additional_vim_regex_highlighting = false,
+    },
   })
-  vim.keymap.set('i', '<C-Space>', require('copilot.suggestion').next)
+
+  -- NERDTREE
+  vim.api.nvim_create_autocmd("VimEnter", {
+    command = "NERDTree",
+  })
+  vim.g.NERDTreeIgnore = { '\\.pyc$', '__pycache__' }
+  vim.keymap.set("n", "<Space>", ":NERDTreeFind<CR>")
+
+  -- AUTOPAIRS
+  vim.g.AutoPairsShortcutToggle = ''
+
+  -- BASE16 - vim/terminal color scheme
+  vim.g.base16colorspace = 256
+  vim.cmd.colorscheme("base16-dracula")
 EOF
 
-autocmd BufWritePre *.go lua vim.lsp.buf.format({ async = false })
-autocmd BufWritePre *.ts lua vim.lsp.buf.format({ async = false })
-autocmd BufWritePre *.py lua vim.lsp.buf.format({ async = false })
-
-let g:airline#extensions#nvimlsp#enabled = 0
-
-"" FZF
-" Call grep on current selected word
-nnoremap <silent> gf :call fzf#vim#grep("grep -rnw --exclude-dir=.git --color=always " . expand("<cword>") . " .", 1)<CR>
-
-"" NERDTREE - file browser in sidebar
-" Enter NERDTree on start
-autocmd VimEnter * :NERDTree
-
-let NERDTreeIgnore = ['\.pyc$', '__pycache__']
-nnoremap <Space> :NERDTreeFind<CR>
-
-"" BASE16 - vim/terminal color scheme
-let base16colorspace = 256
-colorscheme base16-dracula
-
-"" AUTOPAIRS
-let g:AutoPairsShortcutToggle = ''
-
-"" RAINBOW PARANTHESES
-au VimEnter * RainbowParenthesesToggle
-au Syntax * RainbowParenthesesLoadRound
-au Syntax * RainbowParenthesesLoadSquare
-au Syntax * RainbowParenthesesLoadBraces
-
-let g:rbpt_colorpairs = [
-      \ ['brown',       'RoyalBlue3'],
-      \ ['Darkblue',    'SeaGreen3'],
-      \ ['darkgray',    'DarkOrchid3'],
-      \ ['darkgreen',   'firebrick3'],
-      \ ['darkcyan',    'RoyalBlue3'],
-      \ ['darkred',     'SeaGreen3'],
-      \ ['darkmagenta', 'DarkOrchid3'],
-      \ ['brown',       'firebrick3'],
-      \ ['gray',        'RoyalBlue3'],
-      \ ['darkmagenta', 'DarkOrchid3'],
-      \ ['Darkblue',    'firebrick3'],
-      \ ['darkgreen',   'RoyalBlue3'],
-      \ ['darkcyan',    'SeaGreen3'],
-      \ ['darkred',     'DarkOrchid3'],
-      \ ]
+let airline#extensions#nvimlsp#enabled = 0
