@@ -3,3 +3,4 @@
 .envrc
 dump.rdb
 __pycache__
+.claude

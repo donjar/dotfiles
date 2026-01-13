@@ -33,7 +33,7 @@
 	d = diff
 	dh = diff HEAD^
 	dnoc = diff --name-only --cached
-	dno = diff --name-only
+	dno = diff --name-only --relative
 	dw = diff --word-diff
 	lg = log --oneline --graph
 	ma = merge --abort

@@ -12,10 +12,6 @@ else if test $OS = "Darwin"
   alias ls "ls -G"
 end
 
-function c
-  g++ $argv ; and echo 's' ; and ./a.out
-end
-
 set -gx PATH "$HOME/.pyenv/shims" "$HOME/.pyenv/bin" $PATH
 set -gx PYENV_SHELL fish
 source "$HOME/.pyenv/libexec/../completions/pyenv.fish"

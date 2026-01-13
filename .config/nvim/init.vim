@@ -38,6 +38,8 @@ Plug 'MunifTanjim/nui.nvim'
 Plug 'nvim-tree/nvim-web-devicons' "or Plug 'echasnovski/mini.icons'
 Plug 'HakonHarnes/img-clip.nvim'
 Plug 'yetone/avante.nvim', { 'branch': 'main', 'do': 'make' }
+
+Plug 'davidmh/mdx.nvim'
 call plug#end()
 
 lua <<EOF
@@ -52,6 +54,14 @@ lua <<EOF
     pattern = { 'go', 'authzed' },
     callback = function()
       vim.opt.expandtab = false
+    end,
+  })
+  -- SQL files use 4 spaces
+  vim.api.nvim_create_autocmd('FileType', {
+    pattern = 'sql',
+    callback = function()
+      vim.opt.tabstop = 4
+      vim.opt.shiftwidth = 4
     end,
   })
   -- Add line marker at 81th character
@@ -200,7 +210,7 @@ lua <<EOF
 
   -- AVANTE
   require('avante_lib').load()
-  require('avante').setup({})
+  require('avante').setup()
 
   -- TREESITTER
   require("nvim-treesitter.configs").setup({
