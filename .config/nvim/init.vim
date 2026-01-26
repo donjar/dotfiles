@@ -28,16 +28,8 @@ Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
 " Telescope
 Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.8' }
+Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release' }
-" Copilot
-Plug 'zbirenbaum/copilot.lua'
-" Avante
-Plug 'stevearc/dressing.nvim'
-Plug 'MunifTanjim/nui.nvim'
-Plug 'nvim-tree/nvim-web-devicons' "or Plug 'echasnovski/mini.icons'
-Plug 'HakonHarnes/img-clip.nvim'
-Plug 'yetone/avante.nvim', { 'branch': 'main', 'do': 'make' }
 
 Plug 'davidmh/mdx.nvim'
 call plug#end()
@@ -138,13 +130,11 @@ lua <<EOF
   -- NVIM LSP
   local capabilities = require('cmp_nvim_lsp').default_capabilities()
   local lspconfig = require('lspconfig')
-  lspconfig.pylsp.setup({
-    plugins = {
-      ruff = {
-        enabled = true,
-        formatEnabled = true,
-      }
-    }
+  lspconfig.pyright.setup({
+    capabilities = capabilities,
+  })
+  lspconfig.ruff.setup({
+    capabilities = capabilities,
   })
   lspconfig.ts_ls.setup({
     on_attach = function(client, bufnr)
@@ -198,27 +188,9 @@ lua <<EOF
   vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
   vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
 
-  -- COPILOT
-  -- require('copilot').setup({
-  --   suggestion = {
-  --     keymap = {
-  --       accept = "<right>",
-  --       next = '<C-Space>',
-  --     }
-  --   }
-  -- })
-
-  -- AVANTE
-  require('avante_lib').load()
-  require('avante').setup()
-
   -- TREESITTER
-  require("nvim-treesitter.configs").setup({
-    auto_install = true,
-    highlight = {
-      enable = true,
-      additional_vim_regex_highlighting = false,
-    },
+  vim.api.nvim_create_autocmd('FileType', {
+    callback = function() pcall(vim.treesitter.start) end,
   })
 
   -- NERDTREE
