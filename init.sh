@@ -2,9 +2,13 @@
 set -uxe
 
 if [[ `uname` == 'Linux' ]]; then
-  sudo apt-get install --no-install-recommends -y software-properties-common git make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev direnv
+  sudo apt-get install --no-install-recommends -y software-properties-common git make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev direnv ripgrep
 elif [[ `uname` == 'Darwin' ]]; then
-  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  if ! command -v brew &> /dev/null; then
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  fi
+  brew install xz ripgrep fzf direnv gnu-sed
+  brew install --cask font-inconsolata
 fi
 
 mkdir ~/.vimtmp/
@@ -35,8 +39,9 @@ fi
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
-pyenv install 3.10.1
-pyenv global 3.10.1
+LATEST_PYTHON=$(pyenv install --list | grep -E '^\s*[0-9]+\.[0-9]+\.[0-9]+$' | tail -1 | tr -d ' ')
+pyenv install $LATEST_PYTHON
+pyenv global $LATEST_PYTHON
 
 # neovim
 if [[ `uname` == 'Linux' ]]; then
@@ -63,3 +68,7 @@ fish -c "cat ~/.config/fish/fishfile | fisher install"
 
 # pyls
 pip install python-language-server
+
+# claude
+curl -fsSL https://claude.ai/install.sh | sh
+ln -fs $PWD/.claude/CLAUDE.md ~/CLAUDE.md
