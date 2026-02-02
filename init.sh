@@ -8,7 +8,7 @@ elif [[ `uname` == 'Darwin' ]]; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   fi
   brew install xz ripgrep fzf direnv gnu-sed
-  brew install --cask font-inconsolata
+  brew install --cask font-inconsolata-nerd-font
 fi
 
 mkdir ~/.vimtmp/
@@ -19,9 +19,7 @@ mkdir -p ~/.config/nvim/language-client/
 ln -fs $PWD/.bashrc ~
 ln -fs $PWD/.config/fish/config.fish ~/.config/fish/config.fish
 ln -fs $PWD/.config/fish/fishfile ~/.config/fish/fishfile
-ln -fs $PWD/.config/nvim/autoload/plug.vim ~/.config/nvim/autoload/plug.vim
-ln -fs $PWD/.config/nvim/autoload/fzf ~/.config/nvim/autoload/fzf
-ln -fs $PWD/.config/nvim/init.vim ~/.config/nvim/init.vim
+ln -fs $PWD/.config/nvim/init.lua ~/.config/nvim/init.lua
 ln -fs $PWD/.gitconfig ~
 ln -fs $PWD/.global_gitignore ~
 
@@ -66,8 +64,8 @@ fi
 curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fish
 fish -c "cat ~/.config/fish/fishfile | fisher install"
 
-# pyls
-pip install python-language-server
+# python lsp
+pip install python-lsp-server
 
 # claude
 curl -fsSL https://claude.ai/install.sh | sh
