@@ -36,8 +36,5 @@ end
 
 direnv hook fish | source
 
-abbr k 'kubectl'
-abbr tf 'terraform'
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/opt/google-cloud-sdk/path.fish.inc' ]; . '/opt/google-cloud-sdk/path.fish.inc'; end
+# OpenClaw Completion
+# openclaw completion --shell fish | source

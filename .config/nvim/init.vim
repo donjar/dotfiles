@@ -129,14 +129,15 @@ lua <<EOF
 
   -- NVIM LSP
   local capabilities = require('cmp_nvim_lsp').default_capabilities()
-  local lspconfig = require('lspconfig')
-  lspconfig.pyright.setup({
+
+  vim.lsp.config('pyright', {
     capabilities = capabilities,
   })
-  lspconfig.ruff.setup({
+  vim.lsp.config('ruff', {
     capabilities = capabilities,
   })
-  lspconfig.ts_ls.setup({
+  vim.lsp.config('ts_ls', {
+    capabilities = capabilities,
     on_attach = function(client, bufnr)
       vim.lsp.buf_notify(bufnr, "workspace/didChangeConfiguration", {
         settings = {
@@ -149,9 +150,11 @@ lua <<EOF
       })
     end,
   })
-  lspconfig.clangd.setup({})
-  lspconfig.rust_analyzer.setup({})
-  lspconfig.gopls.setup({})
+  vim.lsp.config('clangd', { capabilities = capabilities })
+  vim.lsp.config('rust_analyzer', { capabilities = capabilities })
+  vim.lsp.config('gopls', { capabilities = capabilities })
+
+  vim.lsp.enable({ 'pyright', 'ruff', 'ts_ls', 'clangd', 'rust_analyzer', 'gopls' })
 
   -- Make LSP support jump to definition
   vim.api.nvim_create_autocmd('LspAttach', {
